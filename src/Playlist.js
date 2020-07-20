@@ -3,8 +3,10 @@ import { Howl } from 'howler';
 export default class Playlist {
   songs = [];
   currentSongIndex = 0;
+  setCurrentlyPlaying;
 
-  constructor(listOfSongs) {
+  constructor(listOfSongs, setCurrentlyPlaying) {
+    this.setCurrentlyPlaying = setCurrentlyPlaying;
     for (var song of listOfSongs) {
       this.songs.push(
         new Howl({
@@ -29,6 +31,7 @@ export default class Playlist {
   }
 
   play() {
+    this.setCurrentlyPlaying(this.currentSongIndex);
     this.currentSong.play();
   }
 
