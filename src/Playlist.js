@@ -31,7 +31,7 @@ export default class Playlist {
   }
 
   play() {
-    this.setCurrentlyPlaying(this.currentSongIndex);
+    this.setCurrentlyPlaying = this.currentSongIndex;
     this.currentSong.play();
   }
 
