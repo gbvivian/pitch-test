@@ -28,6 +28,11 @@
   color: #61dafb;
 }
 
+.info {
+  border-color: #2196f3;
+  color: dodgerblue;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

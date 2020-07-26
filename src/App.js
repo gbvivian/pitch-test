@@ -58,9 +58,10 @@ function App() {
   return (
     // <div className="App">
     <div>
-      {notes.map((note) => (
+      {notes.map((note, index) => (
         <span key={note}>
           <button
+            className={index === currentSongIndex ? 'info' : ''}
             onClick={() => {
               // userAnswers.push(note);
               setUserAnswer(userAnswers);
