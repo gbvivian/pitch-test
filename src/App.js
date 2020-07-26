@@ -42,56 +42,63 @@ var car = { type: 'Fiat', model: '500', color: 'white' };
 
 function App() {
   const notes = ['A', 'B', 'C', 'D'];
+  const testNotes = ['A', 'C', 'D', 'B'];
   let [currentStage, setCurrentStage] = useState(0);
   let [isPlaying, setIsPlaying] = useState(false);
+  let [isTestMode, setIsTestMode] = useState(true);
   let [currentChoice, setCurrentChoice] = useState(null);
+  let [currentSongIndex, setCurrentSongIndex] = useState(0);
   let [currentTestIndex, setCurrentTestIndex] = useState(0);
   let [userAnswers, setUserAnswer] = useState([]);
 
+  const updateCurrentSongIndex = (index) => {
+    setCurrentSongIndex(index);
+  };
+
   return (
-    <div className="App">
-      {/* <button
-        onClick={() => {
-          testSounds[test[currentTestIndex]].play();
-        }}
-      >
-        Play sequence
-      </button> */}
-      <button
-        onClick={() => {
-          setIsPlaying(true);
-          testSequence.play();
-          setIsPlaying(false);
-        }}
-      >
-        Play test sequence
-      </button>
-      {/* uncomment this code back, and remove the code above */}
-      {/* {currentStage === 0 && (
+    // <div className="App">
+    <div>
+      {notes.map((note) => (
+        <span key={note}>
+          <button
+            onClick={() => {
+              // userAnswers.push(note);
+              setUserAnswer(userAnswers);
+              console.log('you chose', note);
+            }}
+          >
+            {note}
+          </button>
+        </span>
+      ))}
+      <div>
         <button
           onClick={() => {
             setIsPlaying(true);
-            testSequence.play();
+            testSequence.playAllSongs(updateCurrentSongIndex);
             setIsPlaying(false);
           }}
         >
-          Test me
+          Play test sequence
         </button>
-      )} */}
-      {/* disabled={ */}
-      <br />
-      {notes.map((note) => (
+      </div>
+      {isTestMode && (
         <button
           onClick={() => {
-            userAnswers.push(note);
-            setUserAnswer(userAnswers);
+            userAnswers.push(userAnswers[userAnswers.length - 1]);
             setCurrentTestIndex(currentTestIndex + 1);
-            // fix this bug!!! ^
+            console.log('currently playing', currentTestIndex);
+
+            // testSequence.play(currentTestIndex);
+            testSequence.next();
+            setCurrentChoice(null);
+            console.log('next question');
+            // console.log('currently playing', currentTestIndex);
           }}
         >
-          {note}
+          Confirm
         </button>
-      ))}
+      )}
     </div>
   );
 }

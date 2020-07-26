@@ -13,14 +13,6 @@ export default class Playlist {
           html5: true,
           preload: false,
           src: [song],
-          onend: () => {
-            if (this.currentSongIndex + 1 >= this.songs.length) {
-              this.currentSong.stop();
-            } else {
-              this.currentSongIndex++;
-              this.play();
-            }
-          },
         })
       );
     }
@@ -30,9 +22,23 @@ export default class Playlist {
     return this.songs[this.currentSongIndex];
   }
 
+  playAllSongs(cb) {
+    this.currentSong.once('end', () => {
+      if (this.currentSongIndex + 1 >= this.songs.length) {
+        this.currentSong.stop();
+      } else {
+        this.currentSongIndex++;
+        this.playAllSongs(cb);
+      }
+    });
+    cb(this.currentSongIndex);
+    this.play();
+  }
+
   play() {
     this.setCurrentlyPlaying = this.currentSongIndex;
     this.currentSong.play();
+    console.log('currently playing', this.currentSongIndex);
   }
 
   pause() {
@@ -45,6 +51,7 @@ export default class Playlist {
     if (this.currentSongIndex + 1 >= this.songs.length) {
       this.currentSongIndex = 0;
       this.play();
+      console.log('next clicked: currently playing', this.currentSongIndex);
     } else {
       this.currentSongIndex++;
       this.play();
